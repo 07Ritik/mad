@@ -1,0 +1,670 @@
+// text and buttun 
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String centerText = 'Tap the buttons on the navigation bar';
+
+  // void showMessage(BuildContext context, String message) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text(message)),
+  //   );
+  // }
+
+  void updateCenterText(String newText) {
+    setState(() {
+      centerText = newText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter UI Demo'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            // showMessage(context, 'Hamburger menu clicked');
+            updateCenterText('Hamburger button clicked');
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_left),
+            onPressed: () {
+              // showMessage(context, 'Left button clicked');
+              updateCenterText('Left button clicked');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.arrow_right),
+            onPressed: () {
+              // showMessage(context, 'Right button clicked');
+              updateCenterText('Right button clicked');
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Text(
+          centerText,
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+..........................................
+
+
+
+
+grid view 
+
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<String> images = [
+    "images/download.jpg",
+    "images/banana.jpg",
+    "images/orange.jpg"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Layout"),
+        ),
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Number of columns
+            crossAxisSpacing: 4.0, // Spacing between columns
+            mainAxisSpacing: 4.0, // Spacing between rows
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      images[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(""),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          itemCount: images.length,
+        ),
+      ),
+    );
+  }
+}
+
+
+
+...............................code2 of grid......................
+
+
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        title: Text("Gride View"),
+        backgroundColor: Colors.amber,
+        centerTitle: true,
+      ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 4,
+        children: List.generate(20,(index) => Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fsun%2F&psig=AOvVaw1kUdXOHWAtXgsv4symF-9A&ust=1714147353500000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCD69Xe3YUDFQAAAAAdAAAAABAE'),
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+              child: Center(child: Text('Loading...')),
+
+        // children: [
+        //   Container(color: Colors.black),
+        //   Container(color: const Color.fromARGB(255, 0, 0, 0)),
+        //   Container(color: const Color.fromARGB(255, 0, 0, 0)),
+        //   Container(color: const Color.fromARGB(255, 0, 0, 0))
+        // ],
+      ),
+    ),
+  ),
+
+    ),
+  ));
+}
+
+
+.................................form validation...........
+
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const appTitle = "Form Validation Demo";
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: appTitle,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(appTitle),
+        ),
+        body: const MyCustomForm(),
+      ),
+    );
+  }
+}
+
+class MyCustomForm extends StatefulWidget {
+  const MyCustomForm({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return MyCustomFormState();
+  }
+}
+
+class MyCustomFormState extends State<MyCustomForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: Icon(Icons.person),
+              hintText: 'Enter Your Name',
+              labelText: 'Name',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: Icon(Icons.phone),
+              hintText: 'Enter Your Phone No.',
+              labelText: 'Phone No.',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty || value.length != 10) {
+                return 'Please enter a valid phone no.';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: Icon(Icons.calendar_today),
+              hintText: 'Enter Your DOB',
+              labelText: 'DOB',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your dob';
+              }
+              return null;
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Processing Data')),
+                );
+              }
+            },
+            child: const Text('Submit'),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+
+....................Media Query.....
+
+
+import 'package:flutter/material.dart';
+import 'package:device_preview/device_preview.dart';
+
+void main() {
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) => MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Hello Ritik"),
+          backgroundColor: Colors.green,
+        ),
+        body: MediaQueryExample(),
+      ),
+    );
+  }
+}
+
+class MediaQueryExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    double height = mediaQueryData.size.height;
+    double width = mediaQueryData.size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.cyan,
+      ),
+      body: Container(
+        color: Colors.deepOrange,
+        height: height / 2,
+        width: width / 2,
+      ),
+    );
+  }
+}
+
+
+
+.........................bottom nav....
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyStatefulWidget(),
+      theme: ThemeData(
+        primaryColor: Colors.blue, // Customize primary color
+      ),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String _appBarTitle = 'MailScanner';
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text('MailScanner Screen'),
+    Text('Primary Screen'),
+    Text('Social Screen'),
+    Text('Promotions Screen'),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          _appBarTitle = 'MailScanner';
+          break;
+        case 1:
+          _appBarTitle = 'Primary';
+          break;
+        case 2:
+          _appBarTitle = 'Social';
+          break;
+        case 3:
+          _appBarTitle = 'Promotions';
+          break;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_appBarTitle),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue, // Background color of the navigation bar
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mail),
+            label: 'Inbox',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inbox),
+            label: 'Primary',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Social',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_offer),
+            label: 'Promotions',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color.fromARGB(255, 7, 134, 79), // Color of selected item
+        unselectedItemColor:  Colors.blue, // Color of unselected items
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+
+...............nav.................
+
+//main.dart
+
+ import 'package:flutter/material.dart';
+  import 'primarypage.dart';
+  import 'inbox.dart';
+  import 'socialpage.dart';
+  import 'promotions.dart';
+  import 'package:device_preview/device_preview.dart';
+
+  void main() {
+    runApp(
+      DevicePreview(
+        enabled: true,
+        builder: (context) => MyApp(),
+      ),
+    );
+  }
+
+  class MyApp extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MyStatefulWidget(),
+      );
+    }
+  }
+
+  class MyStatefulWidget extends StatefulWidget {
+    MyStatefulWidget({Key? key}) : super(key: key);
+
+    @override
+    _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  }
+
+  class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter Navigation Drawer'),
+        ),
+        drawer: Drawer(
+          elevation: 20.0,
+          backgroundColor: Color.fromRGBO(192, 196, 255, 1),
+          child: Column(
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
+                accountName: Text("Ritik Shukl"),
+                accountEmail: Text("ritiksit121@gst.sies.edu.in"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 218, 199, 255),
+                  child: Text("VR"),
+                ),
+              ),
+              ListTile(
+                title: const Text("Inbox"),
+                leading: const Icon(Icons.mail),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Mailpage()));
+                },
+              ),
+              ListTile(
+                title: const Text("Primary"),
+                leading: const Icon(Icons.inbox),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Primarypage()));
+                },
+              ),
+              const Divider(
+                height: 0.1,
+              ),
+              ListTile(
+                title: const Text("Social"),
+                leading: Icon(Icons.people),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Socialpage()));
+                },
+              ),
+              ListTile(
+                title: const Text("Promotions"),
+                leading: Icon(Icons.local_offer),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Promotionspage()));
+                },
+              )
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
+  ///  inbox.dart////
+
+import 'package:flutter/material.dart';
+export 'inbox.dart';
+
+class Mailpage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Mail Screen"),
+      ),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Mail Screen',
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
+  }
+}
+
+///// social.dart///////////
+
+
+import 'package:flutter/material.dart';
+export 'socialpage.dart';
+
+class Socialpage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Accounts you follow"),
+      ),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Social Media'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
+  }
+}
+
+////primarypage///
+
+
+import 'package:flutter/material.dart';
+export 'primarypage.dart';
+
+class Primarypage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Promotion Page"),
+      ),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('TE-IT'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
+  }
+}
+
+////promotion page//
+
+import 'package:flutter/material.dart';
+export 'promotions.dart';
+
+class Promotionspage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Promotion Page"),
+      ),
+      body: Center(
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('TE-IT'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
+  }
+}
+
+  
